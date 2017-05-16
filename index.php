@@ -10,13 +10,13 @@ class Email{
 
     /**
     +----------------------------------------------------------
-     * ¹¦ÄÜ£ºÏµÍ³ÓÊ¼þ·¢ËÍº¯Êý
+     * åŠŸèƒ½ï¼šç³»ç»Ÿé‚®ä»¶å‘é€å‡½æ•°
     +----------------------------------------------------------
-     * @param string $to    ½ÓÊÕÓÊ¼þÕßÓÊÏä
-     * @param string $name  ½ÓÊÕÓÊ¼þÕßÃû³Æ
-     * @param string $subject ÓÊ¼þÖ÷Ìâ
-     * @param string $body    ÓÊ¼þÄÚÈÝ
-     * @param string $attachment ¸½¼þÁÐ±í
+     * @param string $to    æŽ¥æ”¶é‚®ä»¶è€…é‚®ç®±
+     * @param string $name  æŽ¥æ”¶é‚®ä»¶è€…åç§°
+     * @param string $subject é‚®ä»¶ä¸»é¢˜
+     * @param string $body    é‚®ä»¶å†…å®¹
+     * @param string $attachment é™„ä»¶åˆ—è¡¨
     +----------------------------------------------------------
      * @return boolean
     +----------------------------------------------------------
@@ -24,19 +24,19 @@ class Email{
     public  static function  sendemail($to, $name, $subject = '', $body = '', $attachment = null, $config = '')
     {
         $config = self::getConfig();
-        include './PHPMailer/phpmailer.class.php';//´ÓPHPMailerÄ¿Â¼µ¼class.phpmailer.phpÀàÎÄ¼þ
-        $mail = new \PHPMailer();                           //PHPMailer¶ÔÏó
-        $mail->CharSet = 'UTF-8';                         //Éè¶¨ÓÊ¼þ±àÂë£¬Ä¬ÈÏISO-8859-1£¬Èç¹û·¢ÖÐÎÄ´ËÏî±ØÐëÉèÖÃ£¬·ñÔòÂÒÂë
-        $mail->IsSMTP();                                   // Éè¶¨Ê¹ÓÃSMTP·þÎñ
+        include './PHPMailer/phpmailer.class.php';//ä»ŽPHPMailerç›®å½•å¯¼class.phpmailer.phpç±»æ–‡ä»¶
+        $mail = new \PHPMailer();                           //PHPMailerå¯¹è±¡
+        $mail->CharSet = 'UTF-8';                         //è®¾å®šé‚®ä»¶ç¼–ç ï¼Œé»˜è®¤ISO-8859-1ï¼Œå¦‚æžœå‘ä¸­æ–‡æ­¤é¡¹å¿…é¡»è®¾ç½®ï¼Œå¦åˆ™ä¹±ç 
+        $mail->IsSMTP();                                   // è®¾å®šä½¿ç”¨SMTPæœåŠ¡
         //$mail->IsHTML(true);
-        $mail->SMTPDebug = 0;                             // ¹Ø±ÕSMTPµ÷ÊÔ¹¦ÄÜ 1 = errors and messages2 = messages only
-        $mail->SMTPAuth = true;                           // ÆôÓÃ SMTP ÑéÖ¤¹¦ÄÜ
+        $mail->SMTPDebug = 0;                             // å…³é—­SMTPè°ƒè¯•åŠŸèƒ½ 1 = errors and messages2 = messages only
+        $mail->SMTPAuth = true;                           // å¯ç”¨ SMTP éªŒè¯åŠŸèƒ½
         if ($config['smtp_port'] == 465)
-            $mail->SMTPSecure = 'ssl';                    // Ê¹ÓÃ°²È«Ð­Òé
-        $mail->Host = $config['smtp_host'];                // SMTP ·þÎñÆ÷
-        $mail->Port = $config['smtp_port'];                // SMTP·þÎñÆ÷µÄ¶Ë¿ÚºÅ
-        $mail->Username = $config['smtp_user'];           // SMTP·þÎñÆ÷ÓÃ»§Ãû
-        $mail->Password = $config['smtp_pass'];           // SMTP·þÎñÆ÷ÃÜÂë
+            $mail->SMTPSecure = 'ssl';                    // ä½¿ç”¨å®‰å…¨åè®®
+        $mail->Host = $config['smtp_host'];                // SMTP æœåŠ¡å™¨
+        $mail->Port = $config['smtp_port'];                // SMTPæœåŠ¡å™¨çš„ç«¯å£å·
+        $mail->Username = $config['smtp_user'];           // SMTPæœåŠ¡å™¨ç”¨æˆ·å
+        $mail->Password = $config['smtp_pass'];           // SMTPæœåŠ¡å™¨å¯†ç 
         $mail->SetFrom($config['from_email'], $config['from_name']);
         $replyEmail = $config['reply_email'] ? $config['reply_email'] : $config['reply_email'];
         $replyName = $config['reply_name'] ? $config['reply_name'] : $config['reply_name'];
@@ -44,7 +44,7 @@ class Email{
         $mail->Subject = $subject;
         $mail->MsgHTML($body);
         $mail->AddAddress($to, $name);
-        if (is_array($attachment)) { // Ìí¼Ó¸½¼þ
+        if (is_array($attachment)) { // æ·»åŠ é™„ä»¶
             foreach ($attachment as $file) {
                 if (is_array($file)) {
                     is_file($file['path']) && $mail->AddAttachment($file['path'], $file['name']);
@@ -67,9 +67,9 @@ class Email{
             'smtp_host'=>'smtp.exmail.qq.com',
             'smtp_port'=>465,
             'from_email'=>'1018707338@qq.com',
-            'from_name'=>'followbeeÔÚÏßÕ¹Î»Ô¤¶¨Æ½Ì¨',
+            'from_name'=>'followbeeåœ¨çº¿å±•ä½é¢„å®šå¹³å°',
             'smtp_user'=>'1018707338@qq.com',
-            'smtp_pass'=>'wolfboy123@',
+            'smtp_pass'=>'222222222222',
             'reply_email'=>'1018707338@qq.com',
             'reply_name'=>' Follow Bee'
         ];
@@ -85,7 +85,7 @@ class Email{
 }
 $to='duzhengwei@3ncto.com';
 $name='sheeran';
-$subject='²âÊÔ';
+$subject='æµ‹è¯•';
 $body='This is body';
 $send=Email::sendemail($to, $name, $subject, $body);
 Email::p($send);
